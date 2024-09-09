@@ -150,8 +150,6 @@ Cypress.Commands.add('selectStartAndEndDate', (startDateSelector, endDateSelecto
 });
 
 
-
-
 Cypress.Commands.add('generateRandomNumber', () => {
   // Generate a random number between 10 and 100
   return Math.floor(Math.random() * (100 - 10 + 1)) + 10;
@@ -225,7 +223,6 @@ Cypress.Commands.add('fillTextboxIfExist', (inputType) => {
 // });
 
 
-
 import { calculateCultureGap } from '../utils/calculations';
 
 Cypress.Commands.add('verifyCultureGap', (axesData) => {
@@ -251,7 +248,6 @@ Cypress.Commands.add('verifyCultureGap', (axesData) => {
       expect(platformCultureGap).to.equal(expectedCultureGap);
     });
 });
-
 
 
 // Engagement calculation function
@@ -280,4 +276,42 @@ Cypress.Commands.add('calculateCapabilitiesScore', (averageRating) => {
   // Calculate the combined capability score
   const capabilitiesScore = (averageRating - 1) * (200 / 5) - 100;
   return capabilitiesScore;
+});
+
+
+// AI Slider select function Engagement/Enps
+Cypress.Commands.add('setSliderValue', (value) => {
+  cy.document().then((doc) => {
+    const slider = doc.querySelector('input[type="range"]');
+    
+    // If no slider is found, log a message and return
+    if (!slider) {
+      cy.log('No slider found on the page, proceeding to the next command.');
+      return;
+    }
+
+    // Check current value
+    const currentValue = slider.value;
+
+    if (currentValue == value) {
+      cy.log(`Slider is already set to ${value}, skipping interaction.`);
+      return;
+    }
+
+    // Set the value directly
+    Object.getOwnPropertyDescriptor(HTMLInputElement.prototype, 'value').set.call(slider, value);
+    slider.dispatchEvent(new Event('input', { bubbles: true }));
+    slider.dispatchEvent(new Event('change', { bubbles: true }));
+
+    // Calculate the position to move the slider
+    const sliderWidth = slider.offsetWidth;
+    const maxValue = parseFloat(slider.max) || 10;
+    const position = sliderWidth * (value / maxValue);
+
+    // Trigger mouse events to simulate dragging the slider
+    cy.wrap(slider)
+      .trigger('mousedown', { which: 1, pageX: slider.getBoundingClientRect().left, force: true })
+      .trigger('mousemove', { pageX: slider.getBoundingClientRect().left + position, force: true })
+      .trigger('mouseup', { force: true });
+  });
 });

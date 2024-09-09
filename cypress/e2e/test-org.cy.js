@@ -33,7 +33,7 @@ describe('Login & Create Organisation', () => {
         //Random name generate
         // cy.get('input[placeholder="Enter a name"]').should('be.visible').type(faker.name.findName())
         //For custom name generate
-        cy.get('input[placeholder="Enter a name"]').should('be.visible').type('0 Survey Check16')
+        cy.get('input[placeholder="Enter a name"]').should('be.visible').type('0 Survey Check17')
 
         // Path to your file within the fixtures folder
         // const fileName = 'logo2.png';
@@ -42,10 +42,20 @@ describe('Login & Create Organisation', () => {
         cy.get('input[placeholder="Enter contact details"]').should('be.visible').type(faker.name.findName())
 
         // Save the organisation
+
+        cy.intercept('Get', 'https://staging.api.culture15.com/organisations').as('loadOrganisationsPage')
+        // Assert that the organizations link is visible
         cy.get('form > .justify-end > .border-transparent').click()
-        cy.log('Organisation created successfully');
+        cy.wait('@loadOrganisationsPage', { timeout: 5000 }).then((interception) => {
+            expect(interception.response.statusCode).to.eq(200);
+            cy.log('Organisations created successfully');
+        });
+        cy.wait(5000)
+
+        // cy.get('form > .justify-end > .border-transparent').click()
+        // cy.log('Organisation created successfully');
         // Edit Org to add segmentation
-        cy.get('button[type="button"]', {timeout:50000}).contains('0 Survey Check16').click();
+        cy.get('button[type="button"]', {timeout:50000}).contains('0 Survey Check17').click();
         // Go to Segmentation tab
         cy.get('#segment-tab-label').click()
 

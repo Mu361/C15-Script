@@ -4,9 +4,8 @@ describe('Create & Respond to Diagnostic Survey', () => {
     it('Create Diagnostic Survey', () => {
         cy.visit('/');
 
-        cy.get('[title="Surveys"] > a > span', { timeout: 40000 }).should('be.visible').click();
-
         cy.intercept('GET', 'https://staging.api.culture15.com/v1/surveys?_sort=created_at:desc&_isDeleted=false&_isArchived=false').as('loadSurveyPage');
+        cy.get('[title="Surveys"] > a > span', { timeout: 40000 }).should('be.visible').click();
         cy.wait('@loadSurveyPage', { timeout: 1200000 }).then((interception) => {
             expect(interception.response.statusCode).to.eq(200);
             cy.log('Survey page loaded successfully');
@@ -26,7 +25,7 @@ describe('Create & Respond to Diagnostic Survey', () => {
         cy.get('#organisation').click();
 
         // Select dropdown based on its organization name
-        const organisationName = 'Survey check15';
+        const organisationName = '0 Survey Check17';
         cy.contains('#organisation div', organisationName, {timeout:40000}).click();
 
         // Click on the 'Diagnostic' button
@@ -35,7 +34,7 @@ describe('Create & Respond to Diagnostic Survey', () => {
         // Click on the 'Continue' button
         cy.get('[title="Continue"]', { timeout: 60000 }).should('be.visible').click();
 
-        cy.get('[id="landingHeading"]', { timeout: 60000 }).should('be.visible').clear().type('Survey');
+        cy.get('[id="landingHeading"]', { timeout: 70000 }).should('be.visible').clear().type('Survey');
 
         // Uploading the image
         const fileName = 'logo2.png';
@@ -81,7 +80,7 @@ describe('Create & Respond to Diagnostic Survey', () => {
             cy.get('[title="Let\'s Begin"]', { timeout: 60000 }).should('be.visible').click();
             // Open the first dropdown
             cy.get('.custom-select__single-value', { timeout: 40000 }).eq(1).click();
-            cy.get('#react-select-5-option-0').then($options => {
+            cy.get('#react-select-4-option-0').then($options => {
                 if ($options.length > 0) {
                     const optionToSelect = Math.floor(Math.random() * $options.length);
                     cy.wrap($options[optionToSelect]).click();
@@ -90,7 +89,7 @@ describe('Create & Respond to Diagnostic Survey', () => {
 
             // Open and select a random option from the second dropdown
             cy.get('.custom-select__single-value', { timeout: 40000 }).eq(2).click();
-            cy.get('#react-select-6-option-0').then($options => {
+            cy.get('#react-select-5-option-0').then($options => {
                 if ($options.length > 0) {
                     const optionToSelect = Math.floor(Math.random() * $options.length);
                     cy.wrap($options[optionToSelect]).click();
@@ -99,7 +98,7 @@ describe('Create & Respond to Diagnostic Survey', () => {
 
             // Open and select a random option from the third dropdown
             cy.get('.sc-jsJBEP', { timeout: 40000 }).eq(3).click();
-            cy.get('#react-select-7-option-0').then($options => {
+            cy.get('#react-select-6-option-0').then($options => {
                 if ($options.length > 0) {
                     const optionToSelect = Math.floor(Math.random() * $options.length);
                     cy.wrap($options[optionToSelect]).click();

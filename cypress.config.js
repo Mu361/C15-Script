@@ -13,6 +13,7 @@ module.exports = defineConfig({
   chromeWebSecurity: false,
   viewportHeight: 800,
   viewportWidth: 1200,
+  watchForFileChanges: true,
 
   reporter: "mochawesome",
   "reporterOptions": {

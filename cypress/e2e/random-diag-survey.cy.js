@@ -1,8 +1,8 @@
 /// <reference types="cypress"/>
 describe('Visit Website', () => {
     it('Should visit the staging survey', () => {
-        cy.visit('https://staging.survey.culture15.com/survey/diagnose/Aug24/66ab3dd33a7b38bf6a26047d');
-        cy.get('[title="Let\'s Begin"]', { timeout: 80000 }).should('be.visible').click();
+        cy.visit('https://survey.culture15.com/survey/diagnose/Sep24/66dae118db3b4054ffd9700c');
+        cy.get('[title="Get Started"]', { timeout: 80000 }).should('be.visible').click();
 
         // Open the first dropdown
         cy.get('.custom-select__single-value ', {timeout:20000}).eq(1).click();
@@ -14,7 +14,7 @@ describe('Visit Website', () => {
         });
 
         // Open and select a random option from the second dropdown
-        cy.get('.sc-jsJBEP', {timeout:20000}).eq(2).click();
+        cy.get('.custom-select__single-value ', {timeout:20000}).eq(2).click();
         cy.get('#react-select-6-option-0').then($options => {
             if ($options.length > 0) {
                 const optionToSelect = Math.floor(Math.random() * $options.length);
@@ -23,7 +23,7 @@ describe('Visit Website', () => {
         });
 
         // Open and select a random option from the third dropdown
-        cy.get('.sc-jsJBEP', {timeout:20000}).eq(3).click();
+        cy.get('.custom-select__single-value ', {timeout:20000}).eq(3).click();
         cy.get('#react-select-7-option-0').then($options => {
             if ($options.length > 0) {
                 const optionToSelect = Math.floor(Math.random() * $options.length);
@@ -46,12 +46,13 @@ describe('Visit Website', () => {
             cy.get('[title="Next"]', { timeout: 20000 }).should('be.visible').click();
         }
 
-
         //Culture in business area
         cy.get('textarea').type('Culture in my business area is good');
+        cy.get('[title="Next"]', { timeout: 20000 }).should('be.visible').click();
 
         //Culture needs to be change
         cy.get('[title="No"]', { timeout: 20000 }).should('be.visible').click();
+        cy.get('[title="Next"]', { timeout: 20000 }).should('be.visible').click();
 
         //Level of trust in the organisaation
         cy.get('.radio-toggle').eq(4).click()
@@ -61,7 +62,6 @@ describe('Visit Website', () => {
 
         //Recommend place to work
         cy.get('.radio-toggle', { timeout: 8000 }).eq(9).scrollIntoView().click({ force: true });
-
 
         //Pride working here makes me want to do my best
         cy.get('.radio-toggle', { timeout: 8000 }).eq(19).scrollIntoView().click({ force: true });

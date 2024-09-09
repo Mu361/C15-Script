@@ -28,7 +28,7 @@ describe('Create & Respond to Definition Survey', () => {
         cy.get('#organisation').click();
 
         // Select dropdown based on its organization name
-        const organisationName = '0 Survey Check16';
+        const organisationName = '0 Survey Check17';
         cy.contains('#organisation div', organisationName, {timeout: 40000}).click();
 
         // Click on the 'Diagnostic' button
