@@ -230,8 +230,8 @@ Cypress.Commands.add('verifyCultureGap', (axesData) => {
   const expectedCultureGap = calculateCultureGap(axesData);
 
   // Fetch the culture gap displayed on the platform
-  cy.get('.sc-ejfMa-d > .llBzxV', { timeout: 10000 })
-    .find('.sc-jMakVo', { timeout: 10000 })
+  cy.get('.sc-fifgRP > .ktOMZe', { timeout: 10000 })
+    .find('.sc-fvtFIe', { timeout: 10000 })
     .invoke('text')
     .then((text) => {
       // Log the raw text to debug

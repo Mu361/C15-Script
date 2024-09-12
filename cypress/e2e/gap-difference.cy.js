@@ -11,7 +11,7 @@ describe('Culture Gap Calculation & Verification', () => {
       });
   
       cy.get('.down-arrow', { timeout: 40000 }).eq(0).should('be.visible').click();
-      cy.get('.search-box', { timeout: 40000 }).eq(0).type('0 Survey Check17');
+      cy.get('.search-box', { timeout: 40000 }).eq(0).type('0 AI SPT');
       cy.get('.radio-toggle').click();
       cy.intercept('POST', 'https://staging.api.culture15.com/v1/survey/home').as('loadSelectedOrganisation');
       cy.wait('@loadSelectedOrganisation', { timeout: 120000 }).then((interception) => {
@@ -20,7 +20,7 @@ describe('Culture Gap Calculation & Verification', () => {
       });
   
       // Fetch and log the culture gap value directly
-      cy.get('.sc-ihgnxF > .status > span')
+      cy.get('.sc-fvtFIe')
         .invoke('text')
         .then(parseFloat)
         .then((cultureGapValue) => {
@@ -28,4 +28,3 @@ describe('Culture Gap Calculation & Verification', () => {
         });
     });
   });
-  
