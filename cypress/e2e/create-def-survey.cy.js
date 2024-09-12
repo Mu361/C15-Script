@@ -28,7 +28,7 @@ describe('Create & Respond to Definition Survey', () => {
         cy.get('#organisation').click();
 
         // Select dropdown based on its organization name
-        const organisationName = '0 Survey Check17';
+        const organisationName = '0 AI SPT';
         cy.contains('#organisation div', organisationName, {timeout: 40000}).click();
 
         // Click on the 'Diagnostic' button
@@ -77,7 +77,7 @@ describe('Create & Respond to Definition Survey', () => {
             cy.log(`Navigating to Survey URL: ${surveyUrl}`);
             cy.visit(surveyUrl);
 
-            cy.get('[title="Let\'s Begin"]', { timeout: 80000 }).should('be.visible').click();
+            cy.get('[title="Get Started"]', { timeout: 80000 }).should('be.visible').click();
 
             cy.get('.noUi-marker ', { timeout: 40000 }).eq(6).should('be.visible').click()
 

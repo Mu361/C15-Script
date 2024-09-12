@@ -33,7 +33,7 @@ describe('Login & Create Organisation', () => {
         //Random name generate
         // cy.get('input[placeholder="Enter a name"]').should('be.visible').type(faker.name.findName())
         //For custom name generate
-        cy.get('input[placeholder="Enter a name"]').should('be.visible').type('0 Survey Check17')
+        cy.get('input[placeholder="Enter a name"]').should('be.visible').type('0 AI SPT')
 
         // Path to your file within the fixtures folder
         // const fileName = 'logo2.png';
@@ -55,7 +55,7 @@ describe('Login & Create Organisation', () => {
         // cy.get('form > .justify-end > .border-transparent').click()
         // cy.log('Organisation created successfully');
         // Edit Org to add segmentation
-        cy.get('button[type="button"]', {timeout:50000}).contains('0 Survey Check17').click();
+        cy.get('button[type="button"]', {timeout:50000}).contains('0 AI SPT').click();
         // Go to Segmentation tab
         cy.get('#segment-tab-label').click()
 

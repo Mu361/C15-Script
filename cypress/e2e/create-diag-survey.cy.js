@@ -25,7 +25,7 @@ describe('Create & Respond to Diagnostic Survey', () => {
         cy.get('#organisation').click();
 
         // Select dropdown based on its organization name
-        const organisationName = '0 Survey Check17';
+        const organisationName = '0 AI SPT';
         cy.contains('#organisation div', organisationName, { timeout: 40000 }).click();
 
         // Click on the 'Diagnostic' button
@@ -33,7 +33,7 @@ describe('Create & Respond to Diagnostic Survey', () => {
 
         // Click on the 'Continue' button
         cy.intercept('POST', 'https://staging.api.culture15.com/v1/surveys').as('loadNextPage');
-        cy.get('[title="Continue"]', { timeout: 90000 }).should('be.visible').click();
+        cy.get('[title="Continue"]', { timeout: 100000 }).should('be.visible').click();
         cy.wait('@loadNextPage').then((interception) => {
             expect(interception.response.statusCode).to.eq(200);
             cy.log('Next page loaded successfully');
@@ -48,7 +48,9 @@ describe('Create & Respond to Diagnostic Survey', () => {
 
         cy.get('[title="Continue"]', { timeout: 40000 }).should('be.visible').click();
 
-        cy.get('.toggle input[type="checkbox"]', { timeout: 40000 }).check({ force: true }).should('be.checked');
+        cy.get(':nth-child(1) > .sc-bdOgaJ > label > .checkbox', { timeout: 40000 }).click();
+
+        // cy.get('.toggle input[type="checkbox"]', { timeout: 40000 }).check({ force: true }).should('be.checked');
 
         cy.get('[title="Continue"]', { timeout: 40000 }).click({ force: true });
 
@@ -82,7 +84,7 @@ describe('Create & Respond to Diagnostic Survey', () => {
             // expect(surveyUrl).to.not.be.undefined;
             cy.log(`Navigating to Survey URL: ${surveyUrl}`);
             cy.visit(surveyUrl);
-            cy.get('[title="Let\'s Begin"]', { timeout: 60000 }).should('be.visible').click();
+            cy.get('[title="Get Started"]', { timeout: 60000 }).should('be.visible').click();
             // Open the first dropdown
             cy.get('.custom-select__single-value ', { timeout: 40000 }).eq(1).click();
             cy.get('#react-select-4-option-0').then($options => {
@@ -93,7 +95,8 @@ describe('Create & Respond to Diagnostic Survey', () => {
             });
 
             // Open and select a random option from the second dropdown
-            cy.get('.sc-jsJBEP', { timeout: 40000 }).eq(2).click();
+            //.sc-jsJBEP
+            cy.get('.custom-select__single-value', { timeout: 40000 }).eq(2).click();
             cy.get('#react-select-5-option-0').then($options => {
                 if ($options.length > 0) {
                     const optionToSelect = Math.floor(Math.random() * $options.length);
@@ -102,7 +105,7 @@ describe('Create & Respond to Diagnostic Survey', () => {
             });
 
             // Open and select a random option from the third dropdown
-            cy.get('.sc-jsJBEP', { timeout: 40000 }).eq(3).click();
+            cy.get('.custom-select__single-value ', {timeout:20000}).eq(3).click();
             cy.get('#react-select-6-option-0').then($options => {
                 if ($options.length > 0) {
                     const optionToSelect = Math.floor(Math.random() * $options.length);
@@ -127,38 +130,37 @@ describe('Create & Respond to Diagnostic Survey', () => {
             }
 
             //Culture in business area
-            cy.get('textarea').type('Culture in my business area is good');
+        cy.get('textarea').type('Culture in my business area is good');
+        cy.get('[title="Next"]', { timeout: 20000 }).should('be.visible').click();
 
-            //Culture needs to be change
-            cy.get('[title="No"]', { timeout: 40000 }).should('be.visible').click();
+        //Culture needs to be change
+        cy.get('[title="No"]', { timeout: 20000 }).should('be.visible').click();
+        cy.get('[title="Next"]', { timeout: 20000 }).should('be.visible').click();
 
-            //Level of trust in the organisaation
-            cy.get('.radio-toggle', { timeout: 40000 }).eq(4).click()
+        //Level of trust in the organisaation
+        cy.get('.radio-toggle').eq(4).click()
 
-            // Click the Next button again to move to the next page
-            cy.get('[title="Next"]', { timeout: 40000 }).should('be.visible').click();
+        // Click the Next button again to move to the next page
+        cy.get('[title="Next"]', { timeout: 20000 }).should('be.visible').click();
 
-            //Recommend place to work
-            cy.get('.radio-toggle', { timeout: 40000 }).eq(9).scrollIntoView().click({ force: true });
-            // selected 9 
+        //Recommend place to work
+        cy.get('.radio-toggle', { timeout: 8000 }).eq(9).scrollIntoView().click({ force: true });
 
-            //Pride working here makes me want to do my best
-            cy.get('.radio-toggle', { timeout: 40000 }).eq(19).scrollIntoView().click({ force: true });
-            // selected 8
-            //Motivation like to be 
-            cy.get('.radio-toggle', { timeout: 40000 }).eq(31).scrollIntoView().click({ force: true });
-            // selected 9
+        //Pride working here makes me want to do my best
+        cy.get('.radio-toggle', { timeout: 8000 }).eq(19).scrollIntoView().click({ force: true });
 
-            //I feel proud working here
-            cy.get('.radio-toggle', { timeout: 40000 }).eq(43).scrollIntoView().click({ force: true });
-            // selected 10
+        //Motivation like to be 
+        cy.get('.radio-toggle', { timeout: 8000 }).eq(31).scrollIntoView().click({ force: true });
 
-            // Click the Next button again to move to the next page
-            cy.get('[title="Next"]', { timeout: 40000 }).should('be.visible').click();
-            cy.wait(6000)
-            // Click the submit button button to submit the survey
-            cy.get('[title="Submit"]', { timeout: 40000 }).should('be.visible').click();
-            cy.wait(6000)
+        //I feel proud working here
+        cy.get('.radio-toggle', { timeout: 8000 }).eq(43).scrollIntoView().click({ force: true });
+
+        // Click the Next button again to move to the next page
+        cy.get('[title="Next"]', { timeout: 20000 }).should('be.visible').click();
+
+        // Click the submit button button to submit the survey
+        cy.get('[title="Submit"]', { timeout: 20000 }).should('be.visible').click();
+        cy.wait(6000)
 
         });
     });
