@@ -3,10 +3,10 @@
 describe('Visit Website', () => {
     it('Should visit the staging website and select random options from three dropdowns', () => {
 
-        Cypress._.times(30, () => {
+        Cypress._.times(1, () => {
             cy.clearCookies();
             cy.clearLocalStorage();
-        cy.visit('https://staging.survey.culture15.com/survey/diagnose/Sep24/66d7f10afbf87a43e921d420');
+        cy.visit('https://staging.survey.culture15.com/survey/diagnose/Sep24/66d827fddc88d3622bf4618d');
         cy.wait(1000)
 
         cy.get('.py-1', { timeout: 10000 }).click({force: true});
@@ -98,6 +98,7 @@ describe('Visit Website', () => {
         cy.get('.font-bold').eq(5, { timeout: 10000 }).click();
 
         cy.setSliderValue(3);
+        cy.get('.font-bold').eq(5, { timeout: 10000 }).click();
         cy.get('.bg-PRIMARY').click()
         cy.wait(8000)
     })
