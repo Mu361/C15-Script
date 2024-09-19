@@ -1,36 +1,13 @@
 /// <reference types="cypress"/>
 describe('Visit Website', () => {
     it('Should visit the staging survey', () => {
-        cy.visit('https://staging.survey.culture15.com/survey/diagnose/Sep24/66e02657cba4763cc8531ad4');
+        cy.visit('http://192.168.10.136:3000/survey/diagnose/Sep24/66ea885690c4f499c8c33de9');
         cy.get('[title="Get Started"]', { timeout: 80000 }).should('be.visible').click();
 
         // Open the first dropdown
-        cy.get('.custom-select__single-value ', {timeout:20000}).eq(1).click();
-        cy.get('#react-select-4-option-0').then($options => {
-            if ($options.length > 0) {
-                const optionToSelect = Math.floor(Math.random() * $options.length);
-                cy.wrap($options[optionToSelect]).click();
-            }
-        });
-
-        // Open and select a random option from the second dropdown
-        cy.get('.custom-select__single-value ', {timeout:20000}).eq(2).click();
-        cy.get('#react-select-5-option-0').then($options => {
-            if ($options.length > 0) {
-                const optionToSelect = Math.floor(Math.random() * $options.length);
-                cy.wrap($options[optionToSelect]).click();
-            }
-        });
-
-        // Open and select a random option from the third dropdown
-        cy.get('.custom-select__single-value ', {timeout:20000}).eq(3).click();
-        cy.get('#react-select-6-option-0').then($options => {
-            if ($options.length > 0) {
-                const optionToSelect = Math.floor(Math.random() * $options.length);
-                cy.wrap($options[optionToSelect]).click();
-            }
-        });
-
+        cy.selectRandomOption('#Division-select');   // First dropdown
+        cy.selectRandomOption('#Region-select');     // Second dropdown
+        cy.selectRandomOption('#Function-select');   // Third dropdown
         // Click the Next button
         cy.get('[title="Next"]', { timeout: 20000 }).should('be.visible').click();
 

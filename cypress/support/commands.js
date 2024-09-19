@@ -315,3 +315,16 @@ Cypress.Commands.add('setSliderValue', (value) => {
       .trigger('mouseup', { force: true });
   });
 });
+
+
+// Segmentation dropdown selection function
+// commands.js or a separate utility file
+Cypress.Commands.add('selectRandomOption', (selector) => {
+  cy.get(selector, { timeout: 20000 }).click();
+  cy.get('.custom-select__menu-list').then($options => {
+      if ($options.length > 0) {
+          const optionToSelect = Math.floor(Math.random() * $options.length);
+          cy.wrap($options[optionToSelect]).click();
+      }
+  });
+});
