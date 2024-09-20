@@ -14,7 +14,7 @@ beforeEach(function () {
 
     // Fill out login form
     cy.get('[name="email"]').should('be.visible').type('mubeen@agsolgroup.com');
-    cy.get('[name="password"]').should('be.visible').type('Agsolgroup@12');
+    cy.get('[name="password"]').should('be.visible').type('Mubeen@12345');
     cy.get('[type="submit"]').should('be.visible').click();
 
     //Welcome popup
@@ -26,7 +26,6 @@ beforeEach(function () {
       .should('eq', 200)
       .then(() => {
         cy.log('Home page loaded successfully');
-
 
       });
   });

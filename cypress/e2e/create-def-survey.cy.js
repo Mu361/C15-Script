@@ -7,8 +7,6 @@ describe('Create & Respond to Definition Survey', () => {
 
         cy.intercept('Get', 'https://staging.api.culture15.com/v1/surveys?_sort=created_at:desc&_isDeleted=false&_isArchived=false').as('loadSurveyPage')
         cy.get('[title="Surveys"] > a > span', { timeout: 40000 }).should('be.visible').click();
-
-        // cy.intercept('Get', 'https://staging.api.culture15.com/v1/surveys?_sort=created_at:desc&_isDeleted=false&_isArchived=false').as('loadSurveyPage')
         cy.wait('@loadSurveyPage', { timeout: 120000 }).then((interception) => {
             expect(interception.response.statusCode).to.eq(200);
             cy.log('Survey page loaded successfully');
@@ -28,14 +26,24 @@ describe('Create & Respond to Definition Survey', () => {
         cy.get('#organisation').click();
 
         // Select dropdown based on its organization name
-        const organisationName = '0 AI SPT';
+        const organisationName = '0 Capability Test 20 Sept';
         cy.contains('#organisation div', organisationName, {timeout: 40000}).click();
 
         // Click on the 'Diagnostic' button
         cy.get('[title="Define"]', { timeout: 40000 }).should('be.visible').click();
 
         // Click on the 'Continue' button
-        cy.get('[title="Continue"]', { timeout: 40000 }).should('be.visible').click();
+        // cy.get('[title="Continue"]', { timeout: 40000 }).should('be.visible').click();
+
+         // Click on the 'Continue' button
+         cy.intercept('POST', 'https://staging.api.culture15.com/v1/surveys').as('loadNextPage');
+         cy.get('[title="Continue"]', { timeout: 100000 }).should('be.visible')
+         .click();
+         cy.pause()
+         cy.wait('@loadNextPage').then((interception) => {
+             expect(interception.response.statusCode).to.eq(200);
+             cy.log('Next page loaded successfully');
+         });
 
         cy.get('[id="landingHeading"]', { timeout: 70000 }).should('be.visible').clear().type('Survey')
 

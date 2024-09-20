@@ -1,7 +1,7 @@
 /// <reference types="cypress"/>
 import faker from 'faker';
-describe('Create & Respond to Diagnostic Survey', () => {
-    it('Create Diagnostic Survey', () => {
+describe('Create AI Survey', () => {
+    it('Create AI Survey', () => {
         cy.visit('/');
 
         cy.intercept('GET', 'https://staging.api.culture15.com/v1/surveys?_sort=created_at:desc&_isDeleted=false&_isArchived=false').as('loadSurveyPage');
@@ -25,7 +25,7 @@ describe('Create & Respond to Diagnostic Survey', () => {
         cy.get('#organisation').click();
 
         // Select dropdown based on its organization name
-        const organisationName = '0 AI SPT';
+        const organisationName = '0 Capability Test 20 Sept';
         cy.contains('#organisation div', organisationName, { timeout: 40000 }).click();
 
         // Click on the 'Diagnostic' button
@@ -33,7 +33,9 @@ describe('Create & Respond to Diagnostic Survey', () => {
 
         // Click on the 'Continue' button
         cy.intercept('POST', 'https://staging.api.culture15.com/v1/surveys').as('loadNextPage');
-        cy.get('[title="Continue"]', { timeout: 100000 }).should('be.visible').click();
+        cy.get('[title="Continue"]', { timeout: 600000 }).should('be.visible')
+        .click();
+        cy.pause()
         cy.wait('@loadNextPage').then((interception) => {
             expect(interception.response.statusCode).to.eq(200);
             cy.log('Next page loaded successfully');
@@ -48,10 +50,14 @@ describe('Create & Respond to Diagnostic Survey', () => {
 
         cy.get('[title="Continue"]', { timeout: 40000 }).should('be.visible').click();
 
-        cy.get('#ai').click()
-        cy.get(':nth-child(1) > .sc-bdOgaJ > label > .checkbox', { timeout: 40000 }).click();
-
-        // cy.get('.toggle input[type="checkbox"]', { timeout: 40000 }).check({ force: true }).should('be.checked');
+        Cypress.Commands.add('clickAISurveyRadio', () => {
+            cy.get('div.sc-laNGHT.haNLRt')
+                .find('label[for="ai"]')
+                .contains('AI survey')
+                .find('input[type="radio"]')
+                .check({ force: true });  // Use force in case the radio is hidden or covered
+        });
+        cy.wait(8000)
 
         cy.get('[title="Continue"]', { timeout: 40000 }).click({ force: true });
 
@@ -66,6 +72,6 @@ describe('Create & Respond to Diagnostic Survey', () => {
         // cy.get('input[type="number"]', {timeout:10000}).should('be.visible').type(1);
         cy.get('[title="Publish Survey"]', { timeout: 40000 }).scrollIntoView().should('be.visible').click();
 
-        
-        });
+
     });
+});
