@@ -1,7 +1,7 @@
 /// <reference types="cypress"/>
 describe('Visit Website', () => {
     it('Should visit the staging survey', () => {
-        cy.visit('http://192.168.10.136:3000/survey/diagnose/Sep24/66ea885690c4f499c8c33de9');
+        cy.visit('https://staging.survey.culture15.com/survey/diagnose/Sep24/66f15aded03e671b68016b84');
         cy.get('[title="Get Started"]', { timeout: 80000 }).should('be.visible').click();
 
         // Open the first dropdown

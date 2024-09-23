@@ -25,7 +25,7 @@ describe('Create & Respond to Diagnostic Survey', () => {
         cy.get('#organisation').click();
 
         // Select dropdown based on its organization name
-        const organisationName = '0 Capability Test 20 Sept';
+        const organisationName = '0 Behaviour Test';
         cy.contains('#organisation div', organisationName, { timeout: 40000 }).click();
 
         // Click on the 'Diagnostic' button
@@ -159,7 +159,7 @@ describe('Create & Respond to Diagnostic Survey', () => {
 
         // Click the submit button button to submit the survey
         cy.get('[title="Submit"]', { timeout: 20000 }).should('be.visible').click();
-        cy.wait(6000)
+        cy.wait(10000)
 
         });
     });

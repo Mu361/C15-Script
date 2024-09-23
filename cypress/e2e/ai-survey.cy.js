@@ -6,7 +6,7 @@ describe('Visit Website', () => {
         Cypress._.times(1, () => {
             cy.clearCookies();
             cy.clearLocalStorage();
-        cy.visit('https://staging.survey.culture15.com/survey/diagnose/Sep24/66d827fddc88d3622bf4618d');
+        cy.visit('https://staging.survey.culture15.com/survey/diagnose/Sep24/66f1631be7c6e34358df196f');
         cy.wait(1000)
 
         cy.get('.py-1', { timeout: 10000 }).click({force: true});
