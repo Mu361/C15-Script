@@ -12,10 +12,10 @@
 
 
 import './login.cy.js';
-// import './test-org.cy.js';
+import './test-org.cy.js';
 import './create-ai-survey.cy.js';
-// import './create-def-survey.cy.js';
-// import './create-diag-survey.cy.js';
-// import './gap.cy.js';
-// import './trust-calculation.cy.js';
+import './create-def-survey.cy.js';
+import './create-diag-survey.cy.js';
+import './gap.cy.js';
+import './trust-calculation.cy.js';
 

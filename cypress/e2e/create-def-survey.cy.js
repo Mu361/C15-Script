@@ -26,7 +26,7 @@ describe('Create & Respond to Definition Survey', () => {
         cy.get('#organisation').click();
 
         // Select dropdown based on its organization name
-        const organisationName = '0 Behaviour Test';
+        const organisationName = '0 Script Org';
         cy.contains('#organisation div', organisationName, {timeout: 40000}).click();
 
         // Click on the 'Diagnostic' button
@@ -134,7 +134,7 @@ describe('Create & Respond to Definition Survey', () => {
             cy.wait(5000)
             // Click the submit button button to submit the survey
             cy.get('[title="Submit"]', { timeout: 40000 }).should('be.visible').click();
-            cy.wait(5000)
+            cy.wait(8000)
 
 
         });

@@ -25,7 +25,7 @@ describe('Create & Respond to AI Survey', () => {
         cy.get('#organisation').click();
 
         // Select dropdown based on its organization name
-        const organisationName = '0 Behaviour Test';
+        const organisationName = '0 Script Org';
         cy.contains('#organisation div', organisationName, { timeout: 40000 }).click();
 
         // Click on the 'Diagnostic' button

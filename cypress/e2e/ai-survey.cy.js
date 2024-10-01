@@ -3,10 +3,10 @@
 describe('Visit Website', () => {
     it('Should visit the staging website and select random options from three dropdowns', () => {
 
-        Cypress._.times(1, () => {
+        Cypress._.times(7, () => {
             cy.clearCookies();
             cy.clearLocalStorage();
-        cy.visit('https://staging.survey.culture15.com/survey/diagnose/Sep24/66f1631be7c6e34358df196f');
+        cy.visit('https://staging.survey.culture15.com/survey/diagnose/Sep24/66f29d362c22319196de04f4');
         cy.wait(1000)
 
         cy.get('.py-1', { timeout: 10000 }).click({force: true});
