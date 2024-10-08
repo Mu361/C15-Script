@@ -230,8 +230,8 @@ Cypress.Commands.add('verifyCultureGap', (axesData) => {
   const expectedCultureGap = calculateCultureGap(axesData);
 
   // Fetch the culture gap displayed on the platform
-  cy.get('.sc-fifgRP > .ktOMZe', { timeout: 10000 })
-    .find('.sc-fvtFIe', { timeout: 10000 })
+  cy.get('.sc-sLsrZ > .bFLIPV', { timeout: 10000 })
+    .find('.sc-bBeLUv', { timeout: 10000 })
     .invoke('text')
     .then((text) => {
       // Log the raw text to debug
@@ -316,15 +316,3 @@ Cypress.Commands.add('setSliderValue', (value) => {
   });
 });
 
-
-// Segmentation dropdown selection function
-// commands.js or a separate utility file
-Cypress.Commands.add('selectRandomOption', (selector) => {
-  cy.get(selector, { timeout: 20000 }).click();
-  cy.get('.custom-select__menu-list').then($options => {
-      if ($options.length > 0) {
-          const optionToSelect = Math.floor(Math.random() * $options.length);
-          cy.wrap($options[optionToSelect]).click();
-      }
-  });
-});

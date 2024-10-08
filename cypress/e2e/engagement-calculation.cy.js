@@ -34,4 +34,3 @@ describe('Engagement Score Verification', () => {
         cy.verifyEngagementScore(calculatedEngagement);
 });
 });
-

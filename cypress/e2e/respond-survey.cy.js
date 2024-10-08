@@ -118,7 +118,7 @@ describe('Visit Website', () => {
         cy.handleRadioGroups({ timeout: 6000 });
 
         // Call the handleTextBox function to fill the text box if it appears
-        //cy.handleTextBox();
+        // cy.handleTextBox();
         cy.fillTextboxIfExist('textarea', { timeout: 6000 });
 
         // Click the Next button again to move to the next page
@@ -198,7 +198,6 @@ describe('Visit Website', () => {
 
         //Recommend place to work
         cy.get('.radio-toggle', { timeout: 8000 }).eq(9).scrollIntoView().click({ force: true });
-
 
         //Pride working here makes me want to do my best
         cy.get('.radio-toggle', {timeout:8000}).eq(19).scrollIntoView().click({ force: true });

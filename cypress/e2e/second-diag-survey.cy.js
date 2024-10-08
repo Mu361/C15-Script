@@ -120,7 +120,6 @@ describe('Create & Respond to Diagnostic Survey', () => {
             cy.get('[title="Next"]', { timeout: 20000 }).should('be.visible').click();
         }
 
-
         //Culture in business area
         cy.get('textarea').type('Culture in my business area is good');
 
@@ -157,5 +156,4 @@ describe('Create & Respond to Diagnostic Survey', () => {
 
         });
     });
-    
 });

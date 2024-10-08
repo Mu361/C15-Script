@@ -33,7 +33,7 @@ describe('Login & Create Organisation', () => {
         //Random name generate
         // cy.get('input[placeholder="Enter a name"]').should('be.visible').type(faker.name.findName())
         //For custom name generate
-        cy.get('input[placeholder="Enter a name"]').should('be.visible').type('0 Script Org')
+        cy.get('input[placeholder="Enter a name"]').should('be.visible').type('0 Script 1')
 
         // Path to your file within the fixtures folder
         // const fileName = 'logo2.png';
@@ -55,7 +55,7 @@ describe('Login & Create Organisation', () => {
         // cy.get('form > .justify-end > .border-transparent').click()
         // cy.log('Organisation created successfully');
         // Edit Org to add segmentation
-        cy.get('button[type="button"]', {timeout:50000}).contains('0 Script Org').click();
+        cy.get('button[type="button"]', { timeout: 50000 }).contains('0 Script 1').click();
         // Go to Segmentation tab
         cy.get('#segment-tab-label').click()
 
@@ -65,24 +65,61 @@ describe('Login & Create Organisation', () => {
         cy.get('[title="Add new entry"]', { timeout: 40000 }).should('be.visible').click();
         cy.get('.input-wrapper > [type="text"]', { timeout: 40000 }).should('be.visible').type('Bus Unit 1');
         cy.get('[type="number"]', { timeout: 40000 }).should('be.visible').type('1');
-        // cy.get('[title="Create segment"]', { timeout: 40000 }).should('be.visible').click();
-        cy.get('.left > img').click();
+        cy.get('#create-segment', { timeout: 10000 }).click()
+
+        //Second Option for Division
+        cy.get('[title="Add new entry"]', { timeout: 40000 }).should('be.visible').click();
+        cy.get('.input-wrapper > [type="text"]', { timeout: 40000 }).should('be.visible').type('Bus Unit 2');
+        cy.get('[type="number"]', { timeout: 40000 }).should('be.visible').type('1');
+        cy.get('#create-segment', { timeout: 10000 }).click()
+
+        //Third Option for Division
+        cy.get('[title="Add new entry"]', { timeout: 40000 }).should('be.visible').click();
+        cy.get('.input-wrapper > [type="text"]', { timeout: 40000 }).should('be.visible').type('Bus Unit 3');
+        cy.get('[type="number"]', { timeout: 40000 }).should('be.visible').type('1');
+        cy.get('#create-segment', { timeout: 10000 }).click()
 
         //Region Segmentation filters
         cy.get('[title="Region"] > :nth-child(1)').should('be.visible').click();
         cy.get('[title="Add new entry"]', { timeout: 40000 }).should('be.visible').click();
         cy.get('.input-wrapper > [type="text"]', { timeout: 40000 }).should('be.visible').type('Asia');
         cy.get('[type="number"]', { timeout: 40000 }).should('be.visible').type('1');
-        cy.get('.left > img').click();
+        // cy.get('.left > img').click();
+        cy.get('#create-segment', { timeout: 10000 }).click()
+
+        //Second Option for Region
+        cy.get('[title="Add new entry"]', { timeout: 40000 }).should('be.visible').click();
+        cy.get('.input-wrapper > [type="text"]', { timeout: 40000 }).should('be.visible').type('Pacific');
+        cy.get('[type="number"]', { timeout: 40000 }).should('be.visible').type('1');
+        cy.get('#create-segment', { timeout: 10000 }).click()
+
+        //Third Option for Region
+        cy.get('[title="Add new entry"]', { timeout: 40000 }).should('be.visible').click();
+        cy.get('.input-wrapper > [type="text"]', { timeout: 40000 }).should('be.visible').type('Sahara');
+        cy.get('[type="number"]', { timeout: 40000 }).should('be.visible').type('1');
+        cy.get('#create-segment', { timeout: 10000 }).click()
 
         //Function Segmentation filters
         cy.get('[title="Function"] > :nth-child(1)').should('be.visible').click();
         cy.get('[title="Add new entry"]', { timeout: 40000 }).should('be.visible').click();
         cy.get('.input-wrapper > [type="text"]', { timeout: 40000 }).should('be.visible').type('Accountant');
         cy.get('[type="number"]', { timeout: 40000 }).should('be.visible').type('1');
-        cy.get('.left > img').click();
+        // cy.get('.left > img').click();
+        cy.get('#create-segment', { timeout: 10000 }).click()
+
+        //Second Option for Function
+        cy.get('[title="Add new entry"]', { timeout: 40000 }).should('be.visible').click();
+        cy.get('.input-wrapper > [type="text"]', { timeout: 40000 }).should('be.visible').type('Development');
+        cy.get('[type="number"]', { timeout: 40000 }).should('be.visible').type('1');
+        cy.get('#create-segment', { timeout: 10000 }).click()
+
+        //Third Option for Function
+        cy.get('[title="Add new entry"]', { timeout: 40000 }).should('be.visible').click();
+        cy.get('.input-wrapper > [type="text"]', { timeout: 40000 }).should('be.visible').type('Resources');
+        cy.get('[type="number"]', { timeout: 40000 }).should('be.visible').type('1');
+        cy.get('#create-segment', { timeout: 10000 }).click()
         // Save the segmentation
-        cy.get('.sc-fbKhjd > .flex > .py-1').click();
+        cy.get('.sc-jOnpCo > .flex > .py-1').click()
         cy.wait(10000)
 
         // Return to organisations page

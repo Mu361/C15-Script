@@ -4,28 +4,28 @@ describe('Create & Respond to AI Survey', () => {
     it('Create AI Survey', () => {
         cy.visit('/');
 
-        cy.intercept('GET', 'https://staging.api.culture15.com/v1/surveys?_sort=created_at:desc&_isDeleted=false&_isArchived=false').as('loadSurveyPage');
+        cy.intercept('GET', 'https://staging.api.culture15.com/surveys').as('loadSurveyPage');
         cy.get('[title="Surveys"] > a > span', { timeout: 40000 }).should('be.visible').click();
         cy.wait('@loadSurveyPage', { timeout: 1200000 }).then((interception) => {
             expect(interception.response.statusCode).to.eq(200);
             cy.log('Survey page loaded successfully');
         });
 
-        cy.get('[title="New Survey"]', { timeout: 60000 }).should('be.visible').click();
-
+        // cy.get('[title="New Survey"]', { timeout: 60000 }).should('be.visible').click();
+        cy.get('button:contains("New survey")').click();
         // Generate a meaningful survey name
         // cy.generateMeaningfulSurveyName().then(meaningfulName => {
         //     // Type survey name into the input field
         //     cy.get('[type="text"]', { timeout: 80000 }).type(meaningfulName);
         // });
 
-        cy.get('[type="text"]', { timeout: 80000 }).type(faker.name.findName());
-
+        // cy.get('[type="text"]', { timeout: 80000 }).type(faker.name.findName());
+        cy.get('#title', { timeout: 80000 }).type(faker.name.findName());
         // Click to open the organisation dropdown
         cy.get('#organisation').click();
 
         // Select dropdown based on its organization name
-        const organisationName = '0 Script Org';
+        const organisationName = '0 Script 1';
         cy.contains('#organisation div', organisationName, { timeout: 40000 }).click();
 
         // Click on the 'Diagnostic' button
@@ -50,14 +50,16 @@ describe('Create & Respond to AI Survey', () => {
 
         cy.get('[title="Continue"]', { timeout: 40000 }).should('be.visible').click();
 
-        Cypress.Commands.add('clickAISurveyRadio', () => {
-            cy.get('div.sc-laNGHT.haNLRt')
-                .find('label[for="ai"]')
-                .contains('AI survey')
-                .find('input[type="radio"]')
-                .check({ force: true });  // Use force in case the radio is hidden or covered
-        });
-        cy.wait(8000)
+        // Cypress.Commands.add('clickAISurveyRadio', () => {
+        //     cy.get('div.sc-laNGHT.haNLRt')
+        //         .find('label[for="ai"]')
+        //         .contains('AI survey')
+        //         .find('input[type="radio"]')
+        //         .check({ force: true });  // Use force in case the radio is hidden or covered
+        // });
+
+        cy.get('#ai-survey').click()
+        cy.wait(5000)
 
         cy.get('[title="Continue"]', { timeout: 40000 }).click({ force: true });
 
@@ -70,6 +72,7 @@ describe('Create & Respond to AI Survey', () => {
         // });
         // cy.get('#totalParticipants').type(1);
         // cy.get('input[type="number"]', {timeout:10000}).should('be.visible').type(1);
+        cy.get('#totalParticipants').type(1);
         cy.get('[title="Publish Survey"]', { timeout: 40000 }).scrollIntoView().should('be.visible').click();
 
         // Get the absolute survey URL and write to a file

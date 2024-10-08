@@ -42,7 +42,6 @@ describe('Login & Create Organisation', () => {
     cy.get('input[type="file"]', { timeout: 30000 }).attachFile(fileName);
 
     // Select random options from the dropdowns
-
     cy.selectRandomOption('#sector', '.custom-select__option', { timeout: 40000 });
     cy.selectRandomOption('#employee', '.custom-select__option', { timeout: 40000 });
     cy.selectRandomOption('#industry', '.custom-select__option', { timeout: 40000 });

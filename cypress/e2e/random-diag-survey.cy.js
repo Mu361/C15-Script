@@ -5,7 +5,7 @@ describe('Visit Website', () => {
         it('Should visit the staging survey', () => {
             cy.clearCookies();
             cy.clearLocalStorage();
-            cy.visit('https://staging.survey.culture15.com/survey/diagnose/Sep24/66f2bab67c10ef37dcdcdd8f');
+            cy.visit('https://staging.survey.culture15.com/survey/diagnose/Oct24/66feb391c8b642a1b69c47bd');
             cy.get('[title="Get Started"]', { timeout: 80000 }).should('be.visible').click();
 
             // Open the first dropdown
@@ -13,33 +13,70 @@ describe('Visit Website', () => {
             // cy.selectRandomOption('#Region-select');     // Second dropdown
             // cy.selectRandomOption('#Function-select');   // Third dropdown
 
-            cy.get('.custom-select__single-value ', { timeout: 40000 }).eq(1).click();
-            cy.get('#react-select-4-option-0')
-                .should('have.length.greaterThan', 0) // Ensure there are options available
+            //First Segmentation
+            cy.get('[id="Which division do you belong to?-select"]', { timeout: 10000 })
+                .click();  // Click to open the dropdown
+            cy.get('.custom-select__menu', { timeout: 10000 })  // Adjust based on the correct class for the dropdown
+                .find('.custom-select__option')  // Select the individual options
+                .should('have.length.greaterThan', 0)  // Ensure there are options available
                 .then($options => {
-                    const randomIndex = Cypress._.random($options.length - 1); // Select a random index
-                    cy.wrap($options.eq(randomIndex)).click({ force: true }); // Click the random option
-                });
-
-            // Open and select a random option from the second dropdown
-            //.sc-jsJBEP
-            cy.get('.custom-select__single-value', { timeout: 40000 }).eq(2).click();
-            cy.get('#react-select-5-option-0')
-                .should('have.length.greaterThan', 0) // Ensure there are options available
-                .then($options => {
-                    const randomIndex = Cypress._.random($options.length - 1); // Select a random index
-                    cy.wrap($options.eq(randomIndex)).click({ force: true }); // Click the random option
+                    const randomIndex = Cypress._.random($options.length - 1);  // Select a random index
+                    cy.wrap($options.eq(randomIndex)).click({ force: true });  // Click the random option
                 });
 
 
-            // Open and select a random option from the third dropdown
-            cy.get('.custom-select__single-value ', { timeout: 20000 }).eq(3).click();
-            cy.get('#react-select-6-option-0')
-            .should('have.length.greaterThan', 0) // Ensure there are options available
-            .then($options => {
-                const randomIndex = Cypress._.random($options.length - 1); // Select a random index
-                cy.wrap($options.eq(randomIndex)).click({ force: true }); // Click the random option
-            });
+                //Second segmentation
+                cy.get('[id="In which region are you based?-select"]', { timeout: 10000 })
+                .click();  // Click to open the dropdown
+            cy.get('.custom-select__menu', { timeout: 10000 })  // Adjust based on the correct class for the dropdown
+                .find('.custom-select__option')  // Select the individual options
+                .should('have.length.greaterThan', 0)  // Ensure there are options available
+                .then($options => {
+                    const randomIndex = Cypress._.random($options.length - 1);  // Select a random index
+                    cy.wrap($options.eq(randomIndex)).click({ force: true });  // Click the random option
+                });
+
+
+                //Third Segmentation
+                cy.get('[id="Which function do you work for?-select"]', { timeout: 10000 })
+                .click();  // Click to open the dropdown
+            cy.get('.custom-select__menu', { timeout: 10000 })  // Adjust based on the correct class for the dropdown
+                .find('.custom-select__option')  // Select the individual options
+                .should('have.length.greaterThan', 0)  // Ensure there are options available
+                .then($options => {
+                    const randomIndex = Cypress._.random($options.length - 1);  // Select a random index
+                    cy.wrap($options.eq(randomIndex)).click({ force: true });  // Click the random option
+                });
+
+
+
+            // cy.get('.custom-select__single-value ', { timeout: 40000 }).eq(1).click();
+            // cy.get('#react-select-4-option-0')
+            //     .should('have.length.greaterThan', 0) // Ensure there are options available
+            //     .then($options => {
+            //         const randomIndex = Cypress._.random($options.length - 1); // Select a random index
+            //         cy.wrap($options.eq(randomIndex)).click({ force: true }); // Click the random option
+            //     });
+
+            // // Open and select a random option from the second dropdown
+            // //.sc-jsJBEP
+            // cy.get('.custom-select__single-value', { timeout: 40000 }).eq(2).click();
+            // cy.get('#react-select-5-option-0')
+            //     .should('have.length.greaterThan', 0) // Ensure there are options available
+            //     .then($options => {
+            //         const randomIndex = Cypress._.random($options.length - 1); // Select a random index
+            //         cy.wrap($options.eq(randomIndex)).click({ force: true }); // Click the random option
+            //     });
+
+
+            // // Open and select a random option from the third dropdown
+            // cy.get('.custom-select__single-value ', { timeout: 20000 }).eq(3).click();
+            // cy.get('#react-select-6-option-0')
+            // .should('have.length.greaterThan', 0) // Ensure there are options available
+            // .then($options => {
+            //     const randomIndex = Cypress._.random($options.length - 1); // Select a random index
+            //     cy.wrap($options.eq(randomIndex)).click({ force: true }); // Click the random option
+            // });
             // Click the Next button
             cy.get('[title="Next"]', { timeout: 20000 }).should('be.visible').click();
 

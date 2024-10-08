@@ -38,7 +38,6 @@
 // });
 
 
-
 /// <reference types="cypress"/>
 
 describe('Delete Organisation', () => {

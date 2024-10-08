@@ -4,14 +4,15 @@ describe('Create & Respond to Diagnostic Survey', () => {
     it('Create Diagnostic Survey', () => {
         cy.visit('/');
 
-        cy.intercept('GET', 'https://staging.api.culture15.com/v1/surveys?_sort=created_at:desc&_isDeleted=false&_isArchived=false').as('loadSurveyPage');
+        cy.intercept('GET', 'https://staging.api.culture15.com/surveys').as('loadSurveyPage');
         cy.get('[title="Surveys"] > a > span', { timeout: 40000 }).should('be.visible').click();
         cy.wait('@loadSurveyPage', { timeout: 1200000 }).then((interception) => {
             expect(interception.response.statusCode).to.eq(200);
             cy.log('Survey page loaded successfully');
         });
 
-        cy.get('[title="New Survey"]', { timeout: 60000 }).should('be.visible').click();
+        // cy.get('[title="New survey"]', { timeout: 60000 }).should('be.visible').click();
+        cy.get('button:contains("New survey")').click();
 
         // Generate a meaningful survey name
         // cy.generateMeaningfulSurveyName().then(meaningfulName => {
@@ -19,20 +20,21 @@ describe('Create & Respond to Diagnostic Survey', () => {
         //     cy.get('[type="text"]', { timeout: 80000 }).type(meaningfulName);
         // });
 
-        cy.get('[type="text"]', { timeout: 80000 }).type(faker.name.findName());
+        // cy.get('[type="text"]', { timeout: 80000 }).type(faker.name.findName());
+        cy.get('#title', { timeout: 80000 }).type(faker.name.findName());
 
         // Click to open the organisation dropdown
         cy.get('#organisation').click();
 
         // Select dropdown based on its organization name
-        const organisationName = '0 Script Org';
+        const organisationName = '0 Script 1';
         cy.contains('#organisation div', organisationName, { timeout: 40000 }).click();
 
         // Click on the 'Diagnostic' button
         cy.get('[title="Diagnostic"]', { timeout: 60000 }).should('be.visible').click();
 
         // Click on the 'Continue' button
-        cy.intercept('POST', 'https://staging.api.culture15.com/v1/surveys').as('loadNextPage');
+        cy.intercept('POST', 'https://staging.api.culture15.com/v1/surveys').as('loadNextPage'); 
         cy.get('[title="Continue"]', { timeout: 100000 }).should('be.visible')
         .click();
         cy.pause()
@@ -62,7 +64,8 @@ describe('Create & Respond to Diagnostic Survey', () => {
         // });
         // cy.get('#totalParticipants').type(1);
         // cy.get('input[type="number"]', {timeout:10000}).should('be.visible').type(1);
-        cy.get('[title="Publish Survey"]', { timeout: 40000 }).scrollIntoView().should('be.visible').click();
+        cy.get('#totalParticipants').type(1);
+        cy.get('[title="Publish Survey"]', { timeout: 40000 }).eq(0).scrollIntoView().should('be.visible').click();
 
         // Get the absolute survey URL and write to a file
         cy.get('button.link', { timeout: 60000 }).invoke('attr', 'title').then((title) => {

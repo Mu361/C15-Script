@@ -51,11 +51,7 @@ describe('Visit Website', () => {
 
         // Click the submit button button to submit the survey
         cy.get('[title="Submit"]', { timeout: 20000 }).should('be.visible').click();
-
-
-        
-
-        
+  
 
     })
 })
