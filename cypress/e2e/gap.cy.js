@@ -5,22 +5,35 @@ describe('Culture Gap Calculation & Verification', () => {
   it('Verify the Culture Gap', () => {
     cy.visit('/');
 
-    cy.get('[title="Home"]', { timeout: 60000 }).should('be.visible').click();
+    // Set up intercept for the first API call
     cy.intercept('POST', 'https://staging.api.culture15.com/v1/survey/home').as('loadHomePage');
-    cy.wait('@loadHomePage', { timeout: 120000 }).then((interception) => {
-      expect(interception.response.statusCode).to.eq(200);
-      cy.log('Home page loaded successfully');
-    });
+    
+    cy.get('[title="Home"]', { timeout: 60000 })
+      .should('be.visible')
+      .click();
 
-    cy.get('.down-arrow', { timeout: 40000 }).eq(0).should('be.visible').click();
-    cy.get('.search-box', { timeout: 40000 }).eq(0).type('0 Script 1');
-    cy.get('.radio-toggle').click();
+    // Wait for the first intercepted request
+    cy.wait('@loadHomePage', { timeout: 120000 })
+      .then((interception) => {
+        expect(interception.response.statusCode).to.eq(200);
+        cy.log('Home page loaded successfully');
+      });
+
+    // Set up intercept for the second API call
     cy.intercept('POST', 'https://staging.api.culture15.com/v1/survey/home').as('loadSelectedOrganisation');
+
+    // Perform actions that will trigger the second API call
+    cy.get('.down-arrow', { timeout: 40000 }).eq(0).should('be.visible').click();
+    cy.get('.search-box', { timeout: 40000 }).eq(0).type(Cypress.env('ORG_NAME'));
+    
+    // Click to trigger the second API call
+    cy.get('.radio-toggle').click();
+
+    // Wait for the second intercepted request
     cy.wait('@loadSelectedOrganisation', { timeout: 120000 }).then((interception) => {
       expect(interception.response.statusCode).to.eq(200);
       cy.log('Organisation loaded successfully');
     });
-
     const axesData = [
       [{ surveyInput: 6.00 }, { surveyInput: 6.00 }], // harmony, challenge
       [{ surveyInput: 6.00 }, { surveyInput: 6.00 }], // individualistic, collective

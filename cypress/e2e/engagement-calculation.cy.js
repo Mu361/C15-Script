@@ -14,7 +14,7 @@ describe('Engagement Score Verification', () => {
         });
 
         cy.get('.down-arrow', { timeout: 40000 }).eq(0).should('be.visible').click();
-        cy.get('.search-box', { timeout: 40000 }).eq(0).type('Survey check15');
+        cy.get('.search-box', { timeout: 40000 }).eq(0).type(Cypress.env('ORG_NAME'));
         cy.get('.radio-toggle').click();
         cy.intercept('POST', 'https://staging.api.culture15.com/v1/survey/home').as('loadSelectedOrganisation');
         cy.wait('@loadSelectedOrganisation', { timeout: 120000 }).then((interception) => {

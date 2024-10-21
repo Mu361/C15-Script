@@ -5,17 +5,26 @@ describe('Calculate & Verify Trust', () => {
     it('Verify the Trust', () => {
         cy.visit('/');
 
-        cy.get('[title="Home"]', { timeout: 60000 }).should('be.visible').click();
+        // Set up intercept for the home page request
         cy.intercept('POST', 'https://staging.api.culture15.com/v1/survey/home').as('loadHomePage');
+        
+        cy.get('[title="Home"]', { timeout: 60000 }).should('be.visible').click();
+
+        // Wait for the home page request to complete
         cy.wait('@loadHomePage', { timeout: 120000 }).then((interception) => {
             expect(interception.response.statusCode).to.eq(200);
             cy.log('Home page loaded successfully');
         });
 
-        cy.get('.down-arrow', { timeout: 40000 }).eq(0).should('be.visible').click();
-        cy.get('.search-box', { timeout: 40000 }).eq(0).type('0 Script 1');
-        cy.get('.radio-toggle').click();
+        // Set up intercept for the selected organization request
         cy.intercept('POST', 'https://staging.api.culture15.com/v1/survey/home').as('loadSelectedOrganisation');
+
+        // Perform actions that will trigger the second API call
+        cy.get('.down-arrow', { timeout: 40000 }).eq(0).should('be.visible').click();
+        cy.get('.search-box', { timeout: 40000 }).eq(0).type(Cypress.env('ORG_NAME'));
+        cy.get('.radio-toggle').click();
+
+        // Wait for the second intercepted request
         cy.wait('@loadSelectedOrganisation', { timeout: 120000 }).then((interception) => {
             expect(interception.response.statusCode).to.eq(200);
             cy.log('Organisation loaded successfully');
@@ -32,7 +41,7 @@ describe('Calculate & Verify Trust', () => {
 
         // Select the parent element
         cy.get('.sc-fBdRDi > :nth-child(2)')
-            .find('.sc-klVQfs > .main')
+            .find('.sc-Nxspf > .main')
             .invoke('text')
             .then((text) => {
                 cy.log(`Text from <p> tag: ${text}`);

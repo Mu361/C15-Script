@@ -231,7 +231,7 @@ Cypress.Commands.add('verifyCultureGap', (axesData) => {
 
   // Fetch the culture gap displayed on the platform
   cy.get('.sc-sLsrZ > .bFLIPV', { timeout: 10000 })
-    .find('.sc-bBeLUv', { timeout: 10000 })
+    .find('.sc-gFVvzn', { timeout: 10000 })
     .invoke('text')
     .then((text) => {
       // Log the raw text to debug
@@ -315,4 +315,3 @@ Cypress.Commands.add('setSliderValue', (value) => {
       .trigger('mouseup', { force: true });
   });
 });
-

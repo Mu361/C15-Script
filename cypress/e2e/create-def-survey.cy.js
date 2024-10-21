@@ -26,8 +26,11 @@ describe('Create & Respond to Definition Survey', () => {
         cy.get('#organisation').click();
 
         // Select dropdown based on its organization name
-        const organisationName = '0 Script 1';
-        cy.contains('#organisation div', organisationName, {timeout: 40000}).click();
+        // const organisationName = '0 Script 1';
+        // cy.contains('#organisation div', organisationName, { timeout: 40000 }).click();
+
+        const organisationName = Cypress.env('ORG_NAME'); // Retrieve the organization name from env
+        cy.contains('#organisation div', organisationName, { timeout: 40000 }).click();
 
         // Click on the 'Diagnostic' button
         cy.get('[title="Define"]', { timeout: 40000 }).should('be.visible').click();
@@ -35,15 +38,15 @@ describe('Create & Respond to Definition Survey', () => {
         // Click on the 'Continue' button
         // cy.get('[title="Continue"]', { timeout: 40000 }).should('be.visible').click();
 
-         // Click on the 'Continue' button
-         cy.intercept('POST', 'https://staging.api.culture15.com/v1/surveys').as('loadNextPage');
-         cy.get('[title="Continue"]', { timeout: 100000 }).should('be.visible')
-         .click();
-         cy.pause()
-         cy.wait('@loadNextPage').then((interception) => {
-             expect(interception.response.statusCode).to.eq(200);
-             cy.log('Next page loaded successfully');
-         });
+        // Click on the 'Continue' button
+        cy.intercept('POST', 'https://staging.api.culture15.com/v1/surveys').as('loadNextPage');
+        cy.get('[title="Continue"]', { timeout: 100000 }).should('be.visible')
+            .click();
+        cy.pause()
+        cy.wait('@loadNextPage').then((interception) => {
+            expect(interception.response.statusCode).to.eq(200);
+            cy.log('Next page loaded successfully');
+        });
 
         cy.get('[id="landingHeading"]', { timeout: 70000 }).should('be.visible').clear().type('Survey')
 
