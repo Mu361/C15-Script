@@ -6,7 +6,7 @@ describe('Culture Gap Calculation & Verification', () => {
     cy.visit('/');
 
     // Set up intercept for the first API call
-    cy.intercept('POST', 'https://staging.api.culture15.com/v1/survey/home').as('loadHomePage');
+    cy.intercept('POST', 'https://staging.api.culture15.com/organisations/*/home/*').as('loadHomePage');
     
     cy.get('[title="Home"]', { timeout: 60000 })
       .should('be.visible')
@@ -20,7 +20,7 @@ describe('Culture Gap Calculation & Verification', () => {
       });
 
     // Set up intercept for the second API call
-    cy.intercept('POST', 'https://staging.api.culture15.com/v1/survey/home').as('loadSelectedOrganisation');
+    cy.intercept('POST', 'https://staging.api.culture15.com/organisations/*/home/*').as('loadSelectedOrganisation');
 
     // Perform actions that will trigger the second API call
     cy.get('.down-arrow', { timeout: 40000 }).eq(0).should('be.visible').click();

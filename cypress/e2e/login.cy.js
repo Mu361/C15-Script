@@ -10,7 +10,7 @@ beforeEach(function () {
     //     cy.visit('https://staging.app.culture15.com');
 
     // Intercept the home page load request  https://api.culture15.com/v1/survey/home for prod URL
-    cy.intercept('POST', 'https://staging.api.culture15.com/v1/survey/home').as('loadHomePage');
+    cy.intercept('GET', 'https://staging.api.culture15.com/organisations/*/home/*').as('loadHomePage');
 
     // Fill out login form
     cy.get('[name="email"]').should('be.visible').type('mubeen@agsolgroup.com');
